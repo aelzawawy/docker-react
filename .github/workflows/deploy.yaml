@@ -1,0 +1,16 @@
+name: Deploy Frontend
+
+on:
+  push:
+    branches: ["master"]
+  pull_requests: ["master"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v4
+      - name: Build the Docker image
+        run: docker build -f Dockerfile.dev -t aelzawawy/docker-react .
+      - name: Run the Docker image with the command "pnpm test" to start tests
+        run: docker run -e CI=true aelzawawy/docker-react pnpm test
