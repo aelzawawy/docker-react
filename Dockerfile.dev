@@ -1,0 +1,7 @@
+from node:16-alpine
+workdir /app
+COPY package.json ./
+RUN npm install -g pnpm@8.0.0
+Run pnpm i
+COPY . .
+CMD ["pnpm", "start"]
