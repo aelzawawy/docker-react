@@ -6,6 +6,10 @@ on:
   pull_request: 
     branches: ["master"]
 
+permissions:
+  contents: write # Required to checkout code and for peaceiris/actions-gh-pages to push
+  pages: write    # Required for peaceiris/actions-gh-pages to deploy to GitHub Pages
+
 jobs:
   build:
     runs-on: ubuntu-latest
