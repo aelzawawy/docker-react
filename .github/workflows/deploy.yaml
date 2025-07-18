@@ -21,5 +21,14 @@ jobs:
       - name: Build the Docker image
         run: docker build -f Dockerfile.dev -t aelzawawy/docker-react .
 
-      - name: Run the Docker image with the command "pnpm test" to start tests
+      - name: Run the Docker tests
         run: docker run -e CI=true aelzawawy/docker-react pnpm test
+      
+      # Since Nginx won't run in GitHub Pages,
+      # Just copy the built static files from a temp container
+      # to './build' on the GitHub Actions runner's filesystem
+      - name: Build for production
+        run: |
+          CONTAINER_ID=$(docker create aelzawawy/frontend-prod)
+          docker cp $CONTAINER_ID:/usr/share/nginx/html ./build
+          docker rm $CONTAINER_ID
