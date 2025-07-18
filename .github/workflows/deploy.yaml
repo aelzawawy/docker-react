@@ -29,6 +29,7 @@ jobs:
       # to './build' on the GitHub Actions runner's filesystem
       - name: Build for production
         run: |
+          docker build -t aelzawawy/frontend-prod .
           CONTAINER_ID=$(docker create aelzawawy/frontend-prod)
           docker cp $CONTAINER_ID:/usr/share/nginx/html ./build
           docker rm $CONTAINER_ID
