@@ -33,3 +33,10 @@ jobs:
           CONTAINER_ID=$(docker create aelzawawy/frontend-prod)
           docker cp $CONTAINER_ID:/usr/share/nginx/html ./build
           docker rm $CONTAINER_ID
+      
+      - name: Publish to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        if: github.ref == 'refs/heads/master'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
